@@ -62,7 +62,7 @@ jobs:
         with:
           name: helm-artifacts
           path: |
-            ${{ github.workspace }}/helm-charts
+            ${{ github.workspace }}/helm-charts/*
             ${{ github.workspace }}/cluster.yml
 
 
