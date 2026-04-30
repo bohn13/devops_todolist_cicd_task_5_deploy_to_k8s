@@ -54,6 +54,7 @@ jobs:
           helm upgrade --install --atomic --wait --timeout 300s --debug ${{inputs.helm-release-name}} ./todoapp-*.tgz \
           -f ${{inputs.helm-values-path}} \
           --set todoapp.image.repository="${{secrets.DOCKERHUB_USERNAME}}/todoapp" \
+          --set todoapp.image.tag="${{ inputs.image-tag }}" \
           --set mysql.secrets.MYSQL_ROOT_PASSWORD="${{secrets.MYSQL_ROOT_PASSWORD}}" \
           --set mysql.secrets.MYSQL_USER="${{secrets.MYSQL_USER}}" \
           --set mysql.secrets.MYSQL_PASSWORD="${{secrets.MYSQL_PASSWORD}}" \
