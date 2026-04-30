@@ -128,7 +128,7 @@ jobs:
     needs: [docker-ci, helm-ci]
     with:
       environment: development
-      helm-values-path: './helm-charts/todoapp/values-dev.yaml'
+      helm-values-path: './helm-charts/todoapp/values.yaml'
       helm-release-name: todoapp-dev
 
   deploy-helm-staging:
