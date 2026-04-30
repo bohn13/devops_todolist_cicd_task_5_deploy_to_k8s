@@ -131,6 +131,8 @@ jobs:
       environment: development
       helm-values-path: './helm-charts/todoapp/values.yaml'
       helm-release-name: todoapp-dev
+      image-tag: ${{ github.sha }}
+
 
   deploy-helm-staging:
     name: Deploy Helm to Staging
@@ -141,3 +143,4 @@ jobs:
       environment: staging
       helm-values-path: './helm-charts/todoapp/values/stg.yaml'
       helm-release-name: todoapp-staging
+      image-tag: ${{ github.sha }}

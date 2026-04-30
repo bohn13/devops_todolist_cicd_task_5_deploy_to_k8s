@@ -15,6 +15,10 @@ on:
       helm-release-name:
         default: todoapp
         type: string
+      image-tag:
+        description: 'Docker image tag to deploy'
+        required: true
+        type: string
 jobs:
   deploy-helm:
     name: ${{inputs.environment}}
@@ -47,16 +51,17 @@ jobs:
 
       - name: Deploy Helm to ${{inputs.environment}}
         run: |
-          helm upgrade --install --rollback-on-failure --wait --timeout 300s --debug ${{inputs.helm-release-name}} ./todoapp-*.tgz \
+          helm upgrade --install --atomic --wait --timeout 300s --debug ${{inputs.helm-release-name}} ./todoapp-*.tgz \
           -f ${{inputs.helm-values-path}} \
+          --set todoapp.image.repository="${{secrets.DOCKERHUB_USERNAME}}/todoapp" \
           --set mysql.secrets.MYSQL_ROOT_PASSWORD="${{secrets.MYSQL_ROOT_PASSWORD}}" \
           --set mysql.secrets.MYSQL_USER="${{secrets.MYSQL_USER}}" \
           --set mysql.secrets.MYSQL_PASSWORD="${{secrets.MYSQL_PASSWORD}}" \
-          --set app.secrets.SECRET_KEY="${{secrets.SECRET_KEY}}" \
-          --set app.secrets.DB_NAME="${{secrets.DB_NAME}}" \
-          --set app.secrets.DB_USER="${{secrets.DB_USER}}" \
-          --set app.secrets.DB_PASSWORD="${{secrets.DB_PASSWORD}}" \
-          --set app.secrets.DB_HOST="${{secrets.DB_HOST}}"
+          --set todoapp.secrets.SECRET_KEY="${{secrets.SECRET_KEY}}" \
+          --set todoapp.secrets.DB_NAME="${{secrets.DB_NAME}}" \
+          --set todoapp.secrets.DB_USER="${{secrets.DB_USER}}" \
+          --set todoapp.secrets.DB_PASSWORD="${{secrets.DB_PASSWORD}}" \
+          --set todoapp.secrets.DB_HOST="${{secrets.DB_HOST}}"
 
       - name: Debug pods
         if: always()
