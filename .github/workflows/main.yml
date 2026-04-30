@@ -128,7 +128,7 @@ jobs:
     needs: [docker-ci, helm-ci]
     with:
       environment: development
-      helm-values-path: './todoapp/values-dev.yaml'
+      helm-values-path: './helm-charts/todoapp/values-dev.yaml'
       helm-release-name: todoapp-dev
 
   deploy-helm-staging:
@@ -138,5 +138,5 @@ jobs:
     secrets: inherit
     with:
       environment: staging
-      helm-values-path: './todoapp/stg.yaml'
+      helm-values-path: './helm-charts/todoapp/values/stg.yaml'
       helm-release-name: todoapp-staging
