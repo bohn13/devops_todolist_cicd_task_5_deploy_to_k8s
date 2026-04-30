@@ -62,6 +62,7 @@ jobs:
         with:
           name: helm-artifacts
           path: ${{ github.workspace }}/helm-charts
+          path: ${{ github.workspace }}/cluster.yml
 
   docker-ci:
     name: Build and Push Image
